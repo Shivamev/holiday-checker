@@ -1,0 +1,144 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+body {
+  font-family: sans-serif;
+  -webkit-font-smoothing: auto;
+  -moz-font-smoothing: auto;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: auto;
+  text-rendering: optimizeLegibility;
+  font-smooth: always;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* --- App.css --------------------------------------------------- */
+
+/* Whole screen -------------------------------------------------- */
+.app-container {
+  position: relative;            /* needed for ::before rain layer */
+  font-family: "Segoe UI", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;              /* pure black backdrop */
+  overflow: hidden;              /* hide overflow from rain layer */
+}
+
+/* Mild‑rain effect (slanted drizzle) ---------------------------- */
+.app-container::before {
+  content: "";
+  position: fixed;               /* covers the whole viewport      */
+  inset: 0;
+  pointer-events: none;
+  /* thin, semi‑transparent streaks – feel free to tweak opacity */
+  background: repeating-linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.08) 0px,
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+  background-size: 100% 100%;
+  animation: rain 14s linear infinite;
+  transform: translate3d(0, 0, 0); /* forces HW accel */
+}
+
+@keyframes rain {
+  from { background-position: 0 0; }
+  to   { background-position: -100% 100%; }
+}
+
+/* Card ---------------------------------------------------------- */
+.card {
+  background: rgba(0, 0, 0, 0.8);      /* translucent to let rain peek */
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid #00ff6a;           /* ✨ slim neon‑green border */
+  box-shadow: 0 6px 18px rgba(0, 255, 106, 0.12);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  color: #f1f1f1;
+}
+
+/* Headings & labels -------------------------------------------- */
+.card h1 {
+  margin-bottom: 1.5rem;
+  color: #00ff87;
+}
+
+.card label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+/* Inputs -------------------------------------------------------- */
+input[type="date"] {
+  padding: 0.55rem;
+  font-size: 1rem;
+  border: 1px solid #00ff6a;
+  background: rgba(0, 0, 0, 0.6);
+  color: #f8f8f8;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(90%); /* light icon on dark bg */
+}
+
+/* Checkbox row -------------------------------------------------- */
+.checkbox {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Button -------------------------------------------------------- */
+.btn {
+  padding: 0.6rem 1.4rem;
+  background: transparent;
+  border: 1px solid #00ff6a;
+  color: #00ff6a;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.35s ease, color 0.35s ease,
+              box-shadow 0.35s ease;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  background: #00ff6a;
+  color: #000;
+  box-shadow: 0 0 12px #00ff6a;
+}
+
+/* Result line --------------------------------------------------- */
+.result {
+  opacity: 0;
+  margin-top: 1.6rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  transform: translateY(12px) scale(0.95);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity   0.45s ease;
+}
+
+.result.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* -------------------------------------------------------------- */
